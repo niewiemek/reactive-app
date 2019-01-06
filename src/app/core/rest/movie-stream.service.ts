@@ -1,17 +1,24 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subscriber } from 'rxjs/src/internal/Subscriber';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class SseObservableFactory {
+export class MovieStreamService {
 
-  create<T>(url: string): Observable<T> {
+  readonly STREAM_ALL_URL = `${environment.FLUX_URL}movies/streamAll`;
+
+  constructor(private httpClient: HttpClient) {
+  }
+
+  allMovies(): Observable<Object> {
     return Observable.create((obs: Subscriber<Object>) => {
-      const es = new EventSource(url);
+      const es = new EventSource(this.STREAM_ALL_URL);
       es.addEventListener('message', (evt: any) => {
-        console.log(`${evt.data}`);
+        console.log(evt.data);
         obs.next(JSON.parse(evt.data));
       }, false);
       es.onerror = (error) => {
