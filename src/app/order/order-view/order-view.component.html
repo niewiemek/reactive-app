@@ -1,0 +1,14 @@
+<h1>Orders</h1>
+<div *ngFor="let o of orders" class="row">
+  <div class="col-12">
+    <div class="card" style="width: 18rem;">
+      <div class="card-header">
+        Order
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{o.pizzaId}}</li>
+        <li class="list-group-item">{{o.deliverTo}}</li>
+      </ul>
+    </div>
+  </div>
+</div>
